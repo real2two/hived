@@ -63,7 +63,6 @@ module.exports = async (client, prefix, msg, args) => {
                 return msg.room.send(`:white_check_mark: Successfully entered the house, **${house.name}**!`);
             })
             .catch((err2) => {
-console.log(err2)
                 return msg.room.send(`:x: Could not join server.`);
             });
     }

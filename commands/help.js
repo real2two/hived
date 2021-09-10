@@ -4,6 +4,7 @@ module.exports = async (client, prefix, msg, args) => {
         `\`${prefix}help\` **-** The help command.\n` +
         `\`${prefix}invite\` **-** Invite the bot to your own server.\n` +
         `\`${prefix}botinfo\` **-** Check this bot's information.\n` +
+        `\`${prefix}ping\` **-** Ping!\n` +
         `\`${prefix}houseinfo\` **-** Check this house's (server) information.\n` +
         `\`${prefix}userinfo\` **-** Check your account's information.\n` +
         `\`${prefix}dice\` **-** Roll a dice.\n` +

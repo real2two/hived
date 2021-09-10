@@ -49,7 +49,7 @@ module.exports = async (client, prefix, msg, args) => {
     } catch(err) {
     } finally {
         testJoin
-            .then((house) => {
+            .then(async (house) => {
                 if (!house || !house.owner) {
                     console.log("[BUILT-IN ERROR] House joining error. House data below:")
                     console.log(house)
@@ -57,12 +57,13 @@ module.exports = async (client, prefix, msg, args) => {
                 }
 
                 if (house.owner.id !== msg.author.id) {
-                    client.houses.leave(house.id);
+                    await client.houses.leave(house.id);
                     return msg.room.send(`:x: You do not own this house.`);
                 }
                 return msg.room.send(`:white_check_mark: Successfully entered the house, **${house.name}**!`);
             })
-            .catch((err) => {
+            .catch((err2) => {
+console.log(err2)
                 return msg.room.send(`:x: Could not join server.`);
             });
     }

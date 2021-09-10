@@ -2,7 +2,7 @@
 
 A Hiven bot.
 
-Support server: https://hiven.house/TzZLqn
+Support house: https://hiven.house/TzZLqn
 
 ## Notice
 

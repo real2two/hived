@@ -15,5 +15,5 @@ module.exports = async (client, prefix, msg, args) => {
     msg.room.send(
         `__:studio_microphone: **${joke.setup}**__\n` +
         `${joke.punchline}`
-    );
+    ).catch(console.error);
 }

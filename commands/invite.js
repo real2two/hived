@@ -2,12 +2,12 @@ let fake = new Set();
 let cooldown = new Set();
 
 module.exports = async (client, prefix, msg, args) => {
-    if (cooldown.has(msg.author.id)) return msg.room.send(`:x:  There is a minute user cooldown for this command. Please try again later!`);
+    if (cooldown.has(msg.author.id)) return msg.room.send(`:x: There is a minute user cooldown for this command. Please try again later!`).catch(console.error);
 
-    if (!args.length) return msg.room.send(`:arrow_forward: You can invite this bot into another guild by using \`${prefix}invite <invite code>\`. Please don't abuse this command!`);
-    if (args[1]) return msg.room.send(`:x: There should not be a second argument.`);
+    if (!args.length) return msg.room.send(`:arrow_forward: You can invite this bot into another guild by using \`${prefix}invite <invite code>\`. Please don't abuse this command!`).catch(console.error);
+    if (args[1]) return msg.room.send(`:x: There should not be a second argument.`).catch(console.error);
 
-    if (cooldown.has("global")) return msg.room.send(`:x: There is a 5 second global cooldown for this command. Please try again in few seconds!`);
+    if (cooldown.has("global")) return msg.room.send(`:x: There is a 5 second global cooldown for this command. Please try again in few seconds!`).catch(console.error);
 
     cooldown.add("global");
     cooldown.add(msg.author.id);
@@ -32,9 +32,9 @@ module.exports = async (client, prefix, msg, args) => {
         roomID = roomID.slice("hiven.house/".length);
     }
 
-    if (roomID.length !== 6) return msg.room.send(`:x: Room IDs should be 6 characters long.`);
-    if (fake.has(roomID)) return msg.room.send(`:x: There has already been an attempt to invite the bot with the provided invite code recently. You must wait an hour before attempting to use this invite code again.`);
-    if (!(roomID.match(/^[0-9a-zA-Z]+$/))) return msg.room.send(`:x: A room with the provided invite code can only contain English letters and numbers.`);
+    if (roomID.length !== 6) return msg.room.send(`:x: Room IDs should be 6 characters long.`).catch(console.error);
+    if (fake.has(roomID)) return msg.room.send(`:x: There has already been an attempt to invite the bot with the provided invite code recently. You must wait an hour before attempting to use this invite code again.`).catch(console.error);
+    if (!(roomID.match(/^[0-9a-zA-Z]+$/))) return msg.room.send(`:x: A room with the provided invite code can only contain English letters and numbers.`).catch(console.error);
 
     fake.add(roomID);
         
@@ -51,19 +51,22 @@ module.exports = async (client, prefix, msg, args) => {
         testJoin
             .then(async (house) => {
                 if (!house || !house.owner) {
+                    if (house && house.id) await client.houses.leave(house.id);
                     console.log("[BUILT-IN ERROR] House joining error. House data below:")
                     console.log(house)
-                    return msg.room.send(`An error has occured.`);
+                    return msg.room.send(`:x: An error has occured. You probably don't own this house.`).catch(console.error);
                 }
 
                 if (house.owner.id !== msg.author.id) {
                     await client.houses.leave(house.id);
-                    return msg.room.send(`:x: You do not own this house.`);
+                    return msg.room.send(`:x: You do not own this house.`).catch(console.error);
                 }
-                return msg.room.send(`:white_check_mark: Successfully entered the house, **${house.name}**!`);
+
+                return msg.room.send(`:white_check_mark: Successfully entered the house, **${house.name}**!`).catch(console.error);
             })
             .catch((err2) => {
-                return msg.room.send(`:x: Could not join server.`);
+                console.log(err2)
+                return msg.room.send(`:x: Could not join server.`).catch(console.error);
             });
     }
 

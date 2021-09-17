@@ -5,10 +5,11 @@ module.exports = async (client, prefix, msg, args) => {
         `\`${prefix}invite\` **-** Invite the bot to your own server.\n` +
         `\`${prefix}botinfo\` **-** Check this bot's information.\n` +
         `\`${prefix}ping\` **-** Ping!\n` +
-        `\`${prefix}houseinfo\` **-** Check this house's (server) information.\n` +
+        (msg.house ? `\`${prefix}houseinfo\` **-** Check this house's (server) information.\n` : "") +
         `\`${prefix}userinfo\` **-** Check your account's information.\n` +
         `\`${prefix}dice\` **-** Roll a dice.\n` +
         `\`${prefix}joke\` **-** Send a terrible joke. ( <https://github.com/15Dkatz/official_joke_api> )\n` +
-        (msg.house.owner.id == msg.author.id ? `\`${prefix}setprefix\` **-** Set the prefix of bot in this server. (HOUSE OWNER ONLY)\n` : "") // +
-    );
+        (msg.house ? (msg.house.owner.id == msg.author.id ? `\`${prefix}setemoji\` **-** Set the emoji of the current room. (HOUSE OWNER ONLY)\n` : "") : "") +
+        (msg.house ? (msg.house.owner.id == msg.author.id ? `\`${prefix}setprefix\` **-** Set the prefix of bot in this server. (HOUSE OWNER ONLY)\n` : "") : "") // +
+    ).catch(console.error);
 }

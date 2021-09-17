@@ -4,5 +4,5 @@ module.exports = async (client, prefix, msg, args) => {
         `:label: Your tag is \`@${msg.author.username}\`.\n` +
         `:id: Your user ID is \`${msg.author.id}\`.\n` +
         `:gift: Your account has been created at \`${msg.author.created.toString()}\`.`
-    );
+    ).catch(console.error);
 }

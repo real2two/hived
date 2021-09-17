@@ -1,6 +1,6 @@
 # Hived
 
-A Hiven bot.
+The very third public Hiven bot (i think). (the first being Bug Bot, and the second being Tag Bot i think)
 
 Support house: https://hiven.house/TzZLqn
 

@@ -27,6 +27,6 @@ module.exports = async (client, prefix, msg, args) => {
 
         if (res.success == false) return msg.room.send(`:x: An error has occured. Does the bot have manage room permissions?`).catch(console.error);
 
-        return msg.room.send(`:white_check_mark: Successfully added a emoji icon on this room.\n\nIf it didn't change, make sure you removed the colons.\nYou might need to click on another room and back to this room for full effect.`).catch(console.error);
+        return msg.room.send(`:white_check_mark: Successfully added a emoji icon on this room.\n\nIf it didn't change, make sure you removed the colons.\nYou might need to click on another room for full effect.`).catch(console.error);
     }
 }

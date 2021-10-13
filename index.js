@@ -4,25 +4,15 @@ const fs = require("fs");
 
 const prefix_db = require("./prefix_db.js");
 
-const { Client } = require('hiven');
-const client = new Client({ type: 'user' });
+const xena = require("xena.js");
+const client = new xena.Client(process.env.TOKEN);
 
-client.on('init', () => {
+client.on('ready', () => {
   console.log("[BOT] Bot is ready!")
 });
 
-client.on('message', async (msg) => {
-  if (!msg.house && !msg.author) return process.exit();
-
-  const prefix = await prefix_db.get(msg.house.id);
-
-  // msg.content
-  // msg.author
-  // msg.member
-  // msg.house
-  // msg.room
-  // msg.edit()
-  // msg.destroy()
+client.on('messageCreate', async (msg) => {
+  const prefix = await prefix_db.get(msg.house_id ? msg.house_id : "h!");
 
   if (!msg.content.startsWith(prefix)) return;
 
@@ -34,10 +24,6 @@ client.on('message', async (msg) => {
   const file = `./commands/${command}.js`;
 
   if (fs.existsSync(file)) {
-    if (!msg.author) return msg.room.send(`:x: We could not find your account information, due to hiven.js bugs. DM me once to resolve this issue.`);
-
-    console.log(`${msg.author.name} | @${msg.author.username} (${msg.author.id}) ran: ${msg.content}`)
-
     try {
       (require(file))(client, prefix, msg, args);
     } catch(err) {
@@ -45,5 +31,3 @@ client.on('message', async (msg) => {
     }
   }
 });
-
-client.connect(process.env.TOKEN);

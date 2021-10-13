@@ -12,8 +12,8 @@ module.exports = async (client, prefix, msg, args) => {
     const num = Math.floor(Math.random() * jokes.length);
     const joke = jokes[num];
 
-    msg.room.send(
+    msg.reply(
         `__:studio_microphone: **${joke.setup}**__\n` +
         `${joke.punchline}`
-    ).catch(console.error);
+    );
 }
